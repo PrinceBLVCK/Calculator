@@ -14,17 +14,16 @@ public class MainActivity extends AppCompatActivity {
     Button equalBtn, cancelBtn, clearBtn, percentBtn;
     TextView activeView, inactiveView;
 
-    int num1, num2;
-    int answer = 0;
+    double num1, num2;
+    double answer = 0;
     char currentOperator =' ';
+    private boolean isInteger;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         initializeBtns();
 
@@ -149,15 +148,21 @@ public class MainActivity extends AppCompatActivity {
                 answer = 0;
             }
         });
+        decimalPointBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkDecimalPoint(activeView.getText().toString())){
+                    activeView.setText(activeView.getText().toString()+".");
+                }
+            }
+        });
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
-                    num1 = Integer.parseInt(inactiveView.getText().toString());
-                    num2 = Integer.parseInt(activeView.getText().toString());
 
-                    answer = num1 + num2;
+                    calculate();
                     inactiveView.setText("" + answer);
                     activeView.setText("0");
                 }
@@ -172,10 +177,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
-                    num1 = Integer.parseInt(inactiveView.getText().toString());
-                    num2 = Integer.parseInt(activeView.getText().toString());
 
-                    answer = num1 - num2;
+                    calculate();
                     inactiveView.setText("" + answer);
                     activeView.setText("0");
                 }
@@ -190,10 +193,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
-                    num1 = Integer.parseInt(inactiveView.getText().toString());
-                    num2 = Integer.parseInt(activeView.getText().toString());
 
-                    answer = num1 * num2;
+                    calculate();
                     inactiveView.setText("" + answer);
                     activeView.setText("0");
                 }
@@ -204,37 +205,43 @@ public class MainActivity extends AppCompatActivity {
                 currentOperator ='*';
             }
         });
+        divideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
+
+                    calculate();
+
+                    inactiveView.setText("" + answer);
+                    activeView.setText("0");
+                }
+                else if (inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
+                    inactiveView.setText(activeView.getText().toString());
+                    activeView.setText("0");
+                }
+                currentOperator ='/';
+            }
+        });
 
         equalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!(inactiveView.getText().toString().isEmpty())){
-                    if (currentOperator == '+'){
-                        num1 = Integer.parseInt(inactiveView.getText().toString());
-                        num2 = Integer.parseInt(activeView.getText().toString());
+                    calculate();
 
-                        answer = num1 + num2;
-                        inactiveView.setText("" );
-                        activeView.setText(""+answer);
+                    if (checkForInteger(answer)){
+                        int a = (int) answer;
+                        inactiveView.setText("");
+                        activeView.setText("" + a);
                     }
-                    if (currentOperator == '-'){
-                        num1 = Integer.parseInt(inactiveView.getText().toString());
-                        num2 = Integer.parseInt(activeView.getText().toString());
-
-                        answer = num1 - num2;
-                        inactiveView.setText("" );
-                        activeView.setText(""+answer);
-                    }
-                    if (currentOperator == '*'){
-                        num1 = Integer.parseInt(inactiveView.getText().toString());
-                        num2 = Integer.parseInt(activeView.getText().toString());
-
-                        answer = num1 * num2;
-                        inactiveView.setText("" );
-                        activeView.setText(""+answer);
+                    else{
+                        inactiveView.setText("");
+                        activeView.setText("" + answer);
                     }
                 }
             }
+
         });
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,16 +255,42 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private boolean checkDecimalPoint(String str) {
+
+        boolean a = true;
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '.'){
+                return false;
+            }
+        }
+
+        return a;
+    }
+
+    private void calculate() {
+        if (!(inactiveView.getText().toString().isEmpty())){
+
+            num1 = Double.parseDouble(inactiveView.getText().toString());
+            num2 = Double.parseDouble(activeView.getText().toString());
 
 
+            if (currentOperator == '+'){
+                answer = num1 + num2;
+            }
+            if (currentOperator == '-'){
+                answer = num1 - num2;
+            }
+            if (currentOperator == '*'){
+                answer = num1 * num2;
+            }
+            if (currentOperator == '/'){
 
-
-
-
-
-
-
-
+                answer = num1 / num2;
+            }
+        }
     }
 
     private void initializeBtns() {
@@ -291,4 +324,16 @@ public class MainActivity extends AppCompatActivity {
         inactiveView = findViewById(R.id.inactiveView);
 
     }
+
+    private boolean checkForInteger(double a){
+        int b = (int) a;
+        if (a == b){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }
