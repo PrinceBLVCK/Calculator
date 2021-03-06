@@ -163,7 +163,12 @@ public class MainActivity extends AppCompatActivity {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
 
                     calculate();
-                    inactiveView.setText("" + answer);
+                    if (checkForInteger(answer)){
+                        int a = (int) answer;
+                        inactiveView.setText("" + a);
+                    }else{
+                        inactiveView.setText("" + answer);
+                    }
                     activeView.setText("0");
                 }
                 else if (inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
@@ -179,7 +184,12 @@ public class MainActivity extends AppCompatActivity {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
 
                     calculate();
-                    inactiveView.setText("" + answer);
+                    if (checkForInteger(answer)){
+                        int a = (int) answer;
+                        inactiveView.setText("" + a);
+                    }else{
+                        inactiveView.setText("" + answer);
+                    }
                     activeView.setText("0");
                 }
                 else if (inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
@@ -195,7 +205,12 @@ public class MainActivity extends AppCompatActivity {
                 if (!inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
 
                     calculate();
-                    inactiveView.setText("" + answer);
+                    if (checkForInteger(answer)){
+                        int a = (int) answer;
+                        inactiveView.setText("" + a);
+                    }else{
+                        inactiveView.setText("" + answer);
+                    }
                     activeView.setText("0");
                 }
                 else if (inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
@@ -212,7 +227,12 @@ public class MainActivity extends AppCompatActivity {
 
                     calculate();
 
-                    inactiveView.setText("" + answer);
+                    if (checkForInteger(answer)){
+                        int a = (int) answer;
+                        inactiveView.setText("" + a);
+                    }else{
+                        inactiveView.setText("" + answer);
+                    }
                     activeView.setText("0");
                 }
                 else if (inactiveView.getText().toString().isEmpty() && !activeView.getText().toString().equals("0")){
